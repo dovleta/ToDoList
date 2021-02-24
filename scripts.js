@@ -6,8 +6,8 @@
 // BugFix - empty input when item inserted succesfully
 // BugFix - dont insert the task when input is empty
 
-const todoList = ['Tidy your room', 'Have your breakfast', 'Hangout with folks'];
-
+const todoList = localStorage.getItem('todoList').split(',');
+console.log(todoList);
 todoList.forEach((element) => {
   let todoList = document.getElementById('todo_list');
   todoList.innerHTML += `<li onclick="this.remove()">${element} </li>`
@@ -15,17 +15,20 @@ todoList.forEach((element) => {
 
 
 function addItem(){
-  const inputValue = document.getElementById('todo_input');
-  if (inputValue.value !== ''){
+  const inputBox = document.getElementById('todo_input');
+  if (inputBox.value !== ''){
     const listItem = document.createElement('li');
   listItem.className = 'todo-list-item';
-  listItem.innerHTML = inputValue.value;
+  listItem.innerHTML = inputBox.value;
   // onclick taze gosulanlar ucin
   listItem.onclick = function(){
-    removeItem(listItem);
+    document.getElementById('todo_list').removeChild(listItem);
   }
   document.getElementById('todo_list').appendChild(listItem);
-  inputValue.value = '';
+  inputBox.value = '';
+  // add new item to array
+  todoList.push(listItem.innerHTML);
+  localStorage.setItem('todoList', todoList)
   } else {
     alert('input box can not be empty')
   }
@@ -35,11 +38,3 @@ function addItem(){
 // Story 2 - when User click on the item in the list , the item will be removed/deleted. 
 // Task 1.1 - Add onclick attribute to li element
 
-function removeItem(listItem){
-  const isConfirmed = confirm('are you sure?')
-  if(isConfirmed){
-  document.getElementById('todo_list').removeChild(listItem);
-  } else {
-    console.log('alright')
-  }
-}
