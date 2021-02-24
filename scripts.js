@@ -7,7 +7,7 @@
 // BugFix - dont insert the task when input is empty
 
 const todoList = localStorage.getItem('todoList').split(',');
-console.log(todoList);
+
 todoList.forEach((element) => {
   let todoList = document.getElementById('todo_list');
   todoList.innerHTML += `<li onclick="this.remove()">${element} </li>`
